@@ -12,12 +12,14 @@ public class Menu {
 			System.out.println("Indique la accion a realizar");
 			System.out.println("1.Visualizar todos los Empleados");
 			System.out.println("2.Visualizar todos los Departamentos");
-			System.out.println("3.Visualizar todos los Empleados  de un Departamento");
-			System.out.println("4.Visualizar todos los Departamentos con sus empleados");
-			System.out.println("5.Salir");
-			Scanner sc =new Scanner(System.in);
+			System.out.println("3.Insertar un Departamento");
+			System.out.println("4.Insertar un Empleado");
+			System.out.println("5.Visualizar todos los Empleados  de un Departamento");
+			System.out.println("6.Visualizar todos los Departamentos con sus empleados");
+			System.out.println("7.Salir");
+			Scanner sc1 =new Scanner(System.in);
 			try {
-				opcion=sc.nextInt();
+				opcion=sc1.nextInt();
 				isValid=true;
 			
 			}
@@ -35,7 +37,7 @@ public class Menu {
 		System.out.println("\nSi desea salir de la aplicacion pulse 1 si no pulse cualquier tecla");
 		try {
 			int opcion=sc.nextInt();
-			return 1;
+			return opcion;
 		}
 		catch(InputMismatchException e) {
 			System.out.println("Error al introducir la accion");

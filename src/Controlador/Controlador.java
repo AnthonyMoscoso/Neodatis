@@ -23,31 +23,42 @@ public class Controlador {
 		this.consola=consola;
 		Iniciar();
 	}
-public void Iniciar() {
-	Menu m =new Menu() ;
-	int valor=m.Inicio();
-	switch(valor) {
-	case 1:
-		LeerTodosLosEmpleados();
-		isExit();
-		break;
-	case 2:
-		LeerTodosLosDepartamentos();
-		isExit();
-		break;
-	case 3:
-		VerEmpleadosDeUnDepartamento();
-		isExit();
-		break;
-		
-	case 4:
-		LeerDepartamentosConEmpleados();
-		isExit();
-		break;
-	case 5:
-		System.exit(0);
-		break;
+	public static void eleccion(int valor) {
+		switch(valor) {
+		case 1:
+			LeerTodosLosEmpleados();
+			isExit();
+			break;
+		case 2:
+			LeerTodosLosDepartamentos();
+			isExit();
+			break;
+		case 3:
+			crearDepartamento();
+			isExit();
+			break;
+		case 4:
+			crearEmpleado();
+			isExit();
+			break;
+
+		case 5:
+			VerEmpleadosDeUnDepartamento();
+			isExit();
+			break;
+			
+		case 6:
+			LeerDepartamentosConEmpleados();
+			isExit();
+			break;
+		case 7:
+			System.exit(0);
+			break;
+		}
 	}
+public void Iniciar() {
+	int valor=menu.Inicio();
+	eleccion(valor);
 }
 public static void LeerTodosLosEmpleados() {
 	Objects<Empleados> objects =consulta.LeerEmpleados();
@@ -55,16 +66,16 @@ public static void LeerTodosLosEmpleados() {
 }
 public static void isExit() {
 	int value=menu.Salida();
-	if(value==0) {
-		menu.Inicio();
+	if(value==1) {
+		System.exit(0);
 	}
 	else {
-		System.exit(0);
+		eleccion(menu.Inicio());
 	}
 }
 public static void LeerTodosLosDepartamentos() {
 	Objects<Departamentos> objects =consulta.LeerDepartamentos();
-	consola.ImprimirDepartamentoConEmpleados(objects);
+	consola.ImprimirDepartamentos(objects);
 }
 public static void VerEmpleadosDeUnDepartamento() {
 	
