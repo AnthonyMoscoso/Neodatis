@@ -18,6 +18,10 @@ import Modelo.Departamentos;
 import Modelo.Empleados;
 
 public class Controlador {
+	public static Menu menu;
+	public Controlador(Menu menu) {
+		this.menu=menu;
+	}
 public static void main(String args[] ) {
 
 	Menu m =new Menu() ;
@@ -42,7 +46,16 @@ public static void main(String args[] ) {
 	}
 }
 public static void LeerTodosLosEmpleados() {
-	
+	isExit();
+}
+public static void isExit() {
+	int value=menu.Salida();
+	if(value==0) {
+		menu.Inicio();
+	}
+	else {
+		System.exit(0);
+	}
 }
 public static void LeerTodosLosDepartamentos() {
 	

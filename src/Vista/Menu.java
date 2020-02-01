@@ -30,4 +30,20 @@ public class Menu {
 		}
 		return opcion;
 	}
+	public static int Salida() {
+		Scanner sc =new Scanner(System.in);
+		System.out.println("\nSi desea salir de la aplicacion pulse 1 si no pulse cualquier tecla");
+		try {
+			int opcion=sc.nextInt();
+			return 1;
+		}
+		catch(InputMismatchException e) {
+			System.out.println("Error al introducir la accion");
+			return 0;
+		}
+		catch(NumberFormatException ex) {
+			System.out.println("Error al introducir la accion");
+			return 0;
+		}
+	}
 }
