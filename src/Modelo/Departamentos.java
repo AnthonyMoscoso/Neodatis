@@ -80,18 +80,18 @@ public class Departamentos {
 
 	}
 
-	public void saveNeodatis() {
+	public String saveNeodatis() {
 		ODB odb = ODBFactory.open("bd.test");
 		IQuery query = new CriteriaQuery(Departamentos.class, Where.equal("dept_no", this.dept_no));
 		Objects<Departamentos> o = odb.getObjects(query);
 		if (o.isEmpty() && IsValidDepartamento(odb)) {
 			odb.store(this);
-			System.out.println("Departamento creado");
+			odb.close();
+			return "Departamento creado";
 		} else {
-			System.out.println("Ya existe un departamento con este Id");
+			odb.close();
+			return "Ya existe un departamento con este Id";
 		}
-		odb.close();
-
 	}
 
 }

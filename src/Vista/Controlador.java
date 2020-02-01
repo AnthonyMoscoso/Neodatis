@@ -3,6 +3,8 @@ package Vista;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 
 import org.neodatis.odb.Objects;
 
@@ -60,17 +62,54 @@ public static void VerEmpleadosDeUnDepartamento() {
 	
 }
 public static void crearDepartamento() {
-	//Departamentos d=new Departamentos(4,"Compras","Chicago");
-	ArrayList<Empleados>empleados=new ArrayList<Empleados>();
-	Departamentos d=new Departamentos(54,"Ventas","Manhattan",empleados);
-	d.saveNeodatis();
+	Departamentos insert=consola.ImprimirGetDepartamento();
+	if(insert!=null) {
+		consola.ImprimirMensage(insert.saveNeodatis());
+	}
+	menu.Inicio();
 }
 public static void crearEmpleado() {
 	Date date= new Date();
 	SimpleDateFormat simple=new SimpleDateFormat("yyyy-MM-dd");
 	String fecha=simple.format(date);
-	Empleados empleado=new Empleados(25,"Ramirez","Programador",fecha,2345.56,100.45,54);
-	empleado.SaveOdb();
+	System.out.println("Inserte el codigo de empleado");
+	Scanner sc =new Scanner (System.in);
+	try
+	{
+		int codigo=sc.nextInt();	
+			consola.ImprimirMensage("Inserte el apellido del empleado");
+			Scanner scApellido=new Scanner(System.in);
+			String apellido=scApellido.nextLine();
+			
+			consola.ImprimirMensage("Inserte el oficio del empleado");
+			Scanner scOficio=new Scanner(System.in);
+			String oficio=scOficio.nextLine();
+			
+			consola.ImprimirMensage("Inserte el Sueldo de empleado");
+			Scanner Sueldo=new Scanner(System.in);
+			
+			double sueldo=Sueldo.nextDouble();;
+			consola.ImprimirMensage("Inserte la comision del empleado");
+			Scanner C=new Scanner(System.in);
+			
+			double comision=C.nextDouble();
+			consola.ImprimirMensage("Inserte el codigo de departamento");
+			
+			Scanner scDept=new Scanner(System.in);
+			int departamento=scDept.nextInt();
+			
+			Empleados empleado=new Empleados(codigo,apellido,oficio,fecha,sueldo,comision,departamento);
+			consola.ImprimirMensage(empleado.SaveOdb());
+	}
+
+	catch(InputMismatchException e) {
+		System.out.println("Error al introducir el dato solo acepta datos numericos");
+		
+	}
+	catch(NumberFormatException ex) {
+		System.out.println("Error al introducir el dato solo acepta datos numericos");
+		
+	}
 }
 public static void LeerDepartamentosConEmpleados() {
 	Objects<Departamentos> objects =consulta.LeerDepartamentos();

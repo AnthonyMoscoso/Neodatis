@@ -106,7 +106,7 @@ public class Empleados {
 		return false;
 	}
 
-	public void SaveOdb() {
+	public String SaveOdb() {
 		ODB odb = ODBFactory.open("bd.test");
 
 		IQuery query = new CriteriaQuery(Departamentos.class, Where.equal("dept_no", this.dept_no));
@@ -117,10 +117,10 @@ public class Empleados {
 			e.getListEmpleados().add(this);
 			odb.store(e);
 			odb.close();
-			System.out.println("Empleado Creado");
+			return "Empleado Creado";
 		}
 		else {
-			System.out.println("No existe un departamento con este codigo");
+			return ("No existe un departamento con este codigo");
 			odb.close();
 		}
 
