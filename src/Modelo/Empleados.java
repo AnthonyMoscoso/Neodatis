@@ -120,8 +120,9 @@ public class Empleados {
 			return "Empleado Creado";
 		}
 		else {
-			return ("No existe un departamento con este codigo");
 			odb.close();
+			return ("No existe un departamento con este codigo");
+	
 		}
 
 	}

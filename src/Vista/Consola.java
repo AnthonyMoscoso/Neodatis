@@ -25,10 +25,13 @@ public class Consola {
 	}
 	public void ImprimirMensage(String mensaje) {
 		System.out.println(mensaje);
+		
 	}
-	public Empleados CreateEmpledo() {
-		
-		
+	public String ObtenerValorScanner(String mensaje) {
+		System.out.println(mensaje);
+		Scanner sc = new Scanner(System.in);
+		String value=sc.nextLine();
+		return value;
 	}
 	public Departamentos ImprimirGetDepartamento() {
 		System.out.println("Inserte el codigo de departamento");
