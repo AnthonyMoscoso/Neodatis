@@ -1,4 +1,4 @@
-package Vista;
+package Controlador;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -11,6 +11,8 @@ import org.neodatis.odb.Objects;
 import Modelo.Consultas;
 import Modelo.Departamentos;
 import Modelo.Empleados;
+import Vista.Consola;
+import Vista.Menu;
 
 public class Controlador {
 	public static Menu menu;
@@ -48,7 +50,8 @@ public void Iniciar() {
 	}
 }
 public static void LeerTodosLosEmpleados() {
-	isExit();
+	Objects<Empleados> objects =consulta.LeerEmpleados();
+	consola.ImprimirEmpleados(objects);
 }
 public static void isExit() {
 	int value=menu.Salida();
@@ -60,35 +63,53 @@ public static void isExit() {
 	}
 }
 public static void LeerTodosLosDepartamentos() {
-	
+	Objects<Departamentos> objects =consulta.LeerDepartamentos();
+	consola.ImprimirDepartamentoConEmpleados(objects);
 }
 public static void VerEmpleadosDeUnDepartamento() {
 	
+	try {
+		int id =Integer.parseInt(consola.ObtenerValorScanner("Introduzca el numero de departamento de los empleados"));
+		Departamentos d=consulta.LeerEmpleadosDeUnDepartamentoByDeptNo(id);
+		if(d!=null) {
+			if(!d.getListEmpleados().isEmpty()) {
+				consola.ImprimirEmpleadosDeUnDepartamento(d);
+			}
+			else {
+				consola.ImprimirMensage("este departamento no tiene ningun empleado");
+			}
+		}
+		else {
+			consola.ImprimirMensage("No existe ningun departamento con ese codigo");
+		}
+	
+	}
+	catch(NumberFormatException ex) {
+		consola.ImprimirMensage("Formato equivocado introduzca solo numero");
+	}
+	
+}
+public static void LeerDepartamentosConEmpleados() {
+	Objects<Departamentos> objects =consulta.LeerDepartamentos();
+	consola.ImprimirDepartamentoConEmpleados(objects);
 }
 public static void crearDepartamento() {
 	try {
 		int codigo=Integer.parseInt(consola.ObtenerValorScanner("Inserte el Sueldo de empleado"));
 		String nombre=consola.ObtenerValorScanner("Inserte el nombre del departamento");
-		String localidad=consola.ObtenerValorScanner("Inserte la localidad");
+		String localidad=consola.ObtenerValorScanner("Inserte la localidad del departamento");
 		ArrayList<Empleados>empleados=new ArrayList<Empleados>();
 		Departamentos d=new Departamentos(codigo,nombre,localidad,empleados);
-		consola.ImprimirMensage(d.saveNeodatis());
-		
+		consola.ImprimirMensage(d.saveNeodatis());	
 	}
 	catch(InputMismatchException e) {
-		System.out.println("Error al introducir el codigo solo acepta datos numericos");
+		consola.ImprimirMensage("Error al introducir el codigo solo acepta datos numericos");
 		
 	}
 	catch(NumberFormatException ex) {
-		System.out.println("Error al introducir el codigo solo acepta datos numericos");
+		consola.ImprimirMensage("Error al introducir el codigo solo acepta datos numericos");
 	
-	}
-	
-	
-
-		
-	
-	
+	}	
 }
 public static void crearEmpleado() {
 	Date date= new Date();
@@ -112,8 +133,5 @@ public static void crearEmpleado() {
 		
 	}
 }
-public static void LeerDepartamentosConEmpleados() {
-	Objects<Departamentos> objects =consulta.LeerDepartamentos();
-	consola.ImprimirDepartamentos(objects);
-}
+
 }

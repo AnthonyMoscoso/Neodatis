@@ -16,11 +16,28 @@ public class Consola {
 		while(objects.hasNext()){
 		  	 Departamentos e = objects.next();
 		  	 System.out.println(e.toString());
+			}
+	}
+	public void ImprimirDepartamentoConEmpleados(Objects<Departamentos> objects) {
+		while(objects.hasNext()){
+		  	 Departamentos e = objects.next();
+		  	 System.out.println(e.toString());
 		  	 if(e.getListEmpleados()!=null && e.getListEmpleados().size()>0) {
 		  		 for(Empleados em : e.getListEmpleados()) {
 		  			 System.out.println(em.toString());
 		  		 }
 		  	 }
+			}
+	}
+	public void ImprimirEmpleadosDeUnDepartamento(Departamentos d) {
+		for(Empleados emp : d.getListEmpleados()) {
+			emp.toString();
+		}
+	}
+	public void ImprimirEmpleados(Objects<Empleados>objects) {
+		while(objects.hasNext()){
+		  	 Empleados e = objects.next();
+		  	 System.out.println(e.toString());
 			}
 	}
 	public void ImprimirMensage(String mensaje) {
@@ -32,32 +49,5 @@ public class Consola {
 		Scanner sc = new Scanner(System.in);
 		String value=sc.nextLine();
 		return value;
-	}
-	public Departamentos ImprimirGetDepartamento() {
-		System.out.println("Inserte el codigo de departamento");
-		Scanner sc=new Scanner(System.in);
-		try {
-			int codigo=sc.nextInt();
-			System.out.println("Inserte el Nombre del departamento");
-			Scanner sc2=new Scanner(System.in);
-			String nombre=sc2.nextLine();
-			System.out.println("Inserte la localidad del departamento");
-			Scanner teclado=new Scanner(System.in);
-			String localidad=teclado.nextLine();
-			ArrayList<Empleados>empleados=new ArrayList<Empleados>();
-			Departamentos d=new Departamentos(codigo,nombre,localidad,empleados);
-			d.saveNeodatis();
-			return d;
-		}
-		catch(InputMismatchException e) {
-			System.out.println("Error al introducir el codigo solo acepta datos numericos");
-			return null;
-		}
-		catch(NumberFormatException ex) {
-			System.out.println("Error al introducir el codigo solo acepta datos numericos");
-			return null;
-		}
-		
-		
 	}
 }
