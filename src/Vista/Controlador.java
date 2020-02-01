@@ -3,27 +3,23 @@ package Vista;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Scanner;
 
-import org.neodatis.odb.ODB;
-import org.neodatis.odb.ODBFactory;
 import org.neodatis.odb.Objects;
-import org.neodatis.odb.core.query.IQuery;
-import org.neodatis.odb.core.query.criteria.Where;
-import org.neodatis.odb.impl.core.query.criteria.CriteriaQuery;
 
+import Modelo.Consultas;
 import Modelo.Departamentos;
 import Modelo.Empleados;
 
 public class Controlador {
 	public static Menu menu;
-	public Controlador(Menu menu) {
+	public static Consola consola;
+	public static Consultas consulta=new Consultas();
+	public Controlador(Menu menu,Consola consola) {
 		this.menu=menu;
+		this.consola=consola;
+		Iniciar();
 	}
-public static void main(String args[] ) {
-
+public void Iniciar() {
 	Menu m =new Menu() ;
 	int valor=m.Inicio();
 	switch(valor) {
@@ -77,16 +73,7 @@ public static void crearEmpleado() {
 	empleado.SaveOdb();
 }
 public static void LeerDepartamentosConEmpleados() {
-	ODB odb = ODBFactory.open("bd.test");// Abrir BD
-	Objects<Departamentos> objects = odb.getObjects(Departamentos.class);
-	while(objects.hasNext()){
-  	  Departamentos e = objects.next();
-  	 System.out.println(e.toString());
-  	 if(e.getListEmpleados()!=null) {
-  		 for(Empleados em : e.getListEmpleados()) {
-  			 System.out.println(em.toString());
-  		 }
-  	 }
-	}
+	Objects<Departamentos> objects =consulta.LeerDepartamentos();
+	consola.ImprimirDepartamentos(objects);
 }
 }
