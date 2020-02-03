@@ -4,19 +4,18 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Menu {
- 
-	@SuppressWarnings("resource")
+	private Scanner sc;
 	public int GetChosseInt(String titulo,String[]MenuDatos) {
 		int opcion=0;
 		boolean isValid =false;
 		while(!isValid) {
-			Scanner sc1 =new Scanner(System.in);
+			sc=new Scanner(System.in);
 			System.out.println(titulo);
 			for(int i=0;i<MenuDatos.length;i++) {
 				System.out.println((i+1)+"."+MenuDatos[i]);
 			}
 			try {
-				opcion=sc1.nextInt();
+				opcion=sc.nextInt();
 				if(opcion<MenuDatos.length+1 && opcion>0) {
 					isValid=true;
 					

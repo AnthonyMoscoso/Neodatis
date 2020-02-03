@@ -25,44 +25,37 @@ public class Controlador {
 	public Controlador(Menu menu, Consola consola) {
 		this.menu = menu;
 		this.consola = consola;
-		Iniciar();
+		
 	}
-
 	public void eleccion(int valor) {
 		switch (valor) {
 		case 1:
 			LeerTodosLosEmpleados();
-			isExit();
 			break;
 		case 2:
-			LeerTodosLosDepartamentos();
-			isExit();
+			LeerTodosLosDepartamentos();	
 			break;
 		case 3:
-			crearDepartamento();
-			isExit();
+			crearDepartamento();		
 			break;
 		case 4:
-			crearEmpleado();
-			isExit();
+			crearEmpleado();		
 			break;
 		case 5:
-			VerEmpleadosDeUnDepartamento();
-			isExit();
+			VerEmpleadosDeUnDepartamento();		
 			break;
-
 		case 6:
 			LeerDepartamentosConEmpleados();
-			isExit();
+			
 			break;
 		case 7:
 			System.exit(0);
 			break;
 		}
+		isExit();
 	}
 
 	public void Iniciar() {
-
 		int valor = menu.GetChosseInt(titulo, MenuInicio);
 		eleccion(valor);
 	}
@@ -175,7 +168,13 @@ public class Controlador {
 		while (!isCodigValid) {
 			try {
 				codigo = Integer.parseInt(consola.ObtenerValorScanner("Inserte el codigo de empleado"));
-				isCodigValid = true;
+				if(consulta.existEmpleadoId(codigo)) {
+					isCodigValid = true;
+				}else {
+					consola.ImprimirMensage("Error ya existe este Codigo de empleados");
+					wantContinue();
+				}
+				
 			} catch (NumberFormatException ex) {
 				consola.ImprimirMensage("Error al introducir el dato solo acepta datos numericos");
 				wantContinue();
@@ -209,12 +208,14 @@ public class Controlador {
 		while (!isCodigValid) {
 			try {
 				departamento = Integer.parseInt(consola.ObtenerValorScanner("Inserte el codigo de departamento"));
-				if (consulta.existDeparmento(departamento)) {
+				if (consulta.GetDepartamentoById(departamento)!=null) {
+					
 					isCodigValid = true;
 				} else {
 					consola.ImprimirMensage(
-							"No existe ningun departamento con este codigo\nLosdepartamentos que existen son :");
+							"No existe ningun departamento con este codigo \nLosdepartamentos que existen son :");
 					consola.ImprimirDepartamentos(consulta.LeerDepartamentos());
+					wantContinue();
 				}
 			} catch (NumberFormatException ex) {
 				consola.ImprimirMensage("Error al introducir el dato solo acepta datos numericos");
@@ -223,7 +224,7 @@ public class Controlador {
 
 		}
 		Empleados empleado = new Empleados(codigo, apellido, oficio, fecha, sueldo, comision, departamento);
-		consola.ImprimirMensage(empleado.SaveOdb());
+		consola.ImprimirMensage(empleado.SaveInDepartamento(consulta.GetDepartamentoById(departamento)));
 	}
 
 }

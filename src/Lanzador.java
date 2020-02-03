@@ -7,5 +7,6 @@ public static void main(String args[]) {
 	Menu menu =new Menu();
 	Consola consola=new Consola();
 	Controlador controlador=new Controlador(menu,consola);
+	controlador.Iniciar();
 }
 }

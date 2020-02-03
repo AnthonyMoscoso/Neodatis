@@ -1,6 +1,5 @@
 package Vista;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 import org.neodatis.odb.Objects;
@@ -40,14 +39,9 @@ public class Consola {
 		  	 System.out.println(e.toString());
 			}
 	}
-	public void ImprimirIdDepartamentos(ArrayList<Integer> list) {
-		for(int i :list) {
-			System.out.println(i);
-		}
-	}
+
 	public void ImprimirMensage(String mensaje) {
 		System.out.println(mensaje);
-		
 	}
 
 	public String ObtenerValorScanner(String mensaje) {

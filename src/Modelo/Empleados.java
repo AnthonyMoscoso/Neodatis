@@ -1,14 +1,7 @@
 package Modelo;
 
-import java.util.ArrayList;
-import java.util.Date;
-
 import org.neodatis.odb.ODB;
 import org.neodatis.odb.ODBFactory;
-import org.neodatis.odb.Objects;
-import org.neodatis.odb.core.query.IQuery;
-import org.neodatis.odb.core.query.criteria.Where;
-import org.neodatis.odb.impl.core.query.criteria.CriteriaQuery;
 
 public class Empleados {
 
@@ -95,35 +88,17 @@ public class Empleados {
 	private double comision;
 	private int dept_no;
 
-	public boolean IsEmpleadoValid(ODB odb) {
-		IQuery query = new CriteriaQuery(Empleados.class, Where.equal("emp_no", this.emp_no));
-		Objects<Empleados> o = odb.getObjects(query);
-		if (o.isEmpty()) {
-			
-			return true;
-		}
-		System.out.println("Ya existe un Empleado con este Id");
-		return false;
-	}
 
-	public String SaveOdb() {
+
+	public String SaveInDepartamento(Departamentos e) {
 		ODB odb = ODBFactory.open("bd.test");
-
-		IQuery query = new CriteriaQuery(Departamentos.class, Where.equal("dept_no", this.dept_no));
-		Objects<Departamentos> o = odb.getObjects(query);
-		if (!o.isEmpty() && IsEmpleadoValid(odb)) {
-			odb.store(this);
-			Departamentos e = o.getFirst();
-			e.getListEmpleados().add(this);
-			odb.store(e);
-			odb.close();
-			return "Empleado Creado";
-		}
-		else {
-			odb.close();
-			return ("No existe un departamento con este codigo");
+		odb.store(this);
+		e.getListEmpleados().add(this);
+		odb.store(e);
+		odb.close();
+		return "Empleado Creado";
+		
 	
-		}
 
 	}
 }
