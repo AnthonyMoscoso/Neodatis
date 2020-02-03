@@ -1,9 +1,6 @@
 package Vista;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import org.neodatis.odb.Objects;
@@ -12,6 +9,7 @@ import Modelo.Departamentos;
 import Modelo.Empleados;
 
 public class Consola {
+	private Scanner sc;
 	public void ImprimirDepartamentos(Objects<Departamentos> objects) {
 		while(objects.hasNext()){
 		  	 Departamentos e = objects.next();
@@ -19,7 +17,7 @@ public class Consola {
 			}
 	}
 	public void ImprimirDepartamentoConEmpleados(Objects<Departamentos> objects) {
-		while(objects.hasNext()){
+		while(objects.hasNext()){ 
 		  	 Departamentos e = objects.next();
 		  	 System.out.println(e.toString());
 		  	 if(e.getListEmpleados()!=null && e.getListEmpleados().size()>0) {
@@ -27,11 +25,13 @@ public class Consola {
 		  			 System.out.println(em.toString());
 		  		 }
 		  	 }
+		  	 System.out.println();
 			}
+		
 	}
 	public void ImprimirEmpleadosDeUnDepartamento(Departamentos d) {
 		for(Empleados emp : d.getListEmpleados()) {
-			emp.toString();
+			System.out.println(emp.toString());
 		}
 	}
 	public void ImprimirEmpleados(Objects<Empleados>objects) {
@@ -40,13 +40,19 @@ public class Consola {
 		  	 System.out.println(e.toString());
 			}
 	}
+	public void ImprimirIdDepartamentos(ArrayList<Integer> list) {
+		for(int i :list) {
+			System.out.println(i);
+		}
+	}
 	public void ImprimirMensage(String mensaje) {
 		System.out.println(mensaje);
 		
 	}
+
 	public String ObtenerValorScanner(String mensaje) {
 		System.out.println(mensaje);
-		Scanner sc = new Scanner(System.in);
+		sc = new Scanner(System.in);
 		String value=sc.nextLine();
 		return value;
 	}

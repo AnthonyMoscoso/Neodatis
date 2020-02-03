@@ -4,48 +4,37 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Menu {
-
-	public static int Inicio() {
+ 
+	@SuppressWarnings("resource")
+	public int GetChosseInt(String titulo,String[]MenuDatos) {
 		int opcion=0;
 		boolean isValid =false;
 		while(!isValid) {
-			System.out.println("Indique la accion a realizar");
-			System.out.println("1.Visualizar todos los Empleados");
-			System.out.println("2.Visualizar todos los Departamentos");
-			System.out.println("3.Insertar un Departamento");
-			System.out.println("4.Insertar un Empleado");
-			System.out.println("5.Visualizar todos los Empleados  de un Departamento");
-			System.out.println("6.Visualizar todos los Departamentos con sus empleados");
-			System.out.println("7.Salir");
 			Scanner sc1 =new Scanner(System.in);
+			System.out.println(titulo);
+			for(int i=0;i<MenuDatos.length;i++) {
+				System.out.println((i+1)+"."+MenuDatos[i]);
+			}
 			try {
 				opcion=sc1.nextInt();
-				isValid=true;
+				if(opcion<MenuDatos.length+1 && opcion>0) {
+					isValid=true;
+					
+				}
+				else {
+					System.out.println("El valor introducido esta fuera de rango porfavor elija una opcion del menu entre 1 -"+MenuDatos.length+"\n");	
+				}
 			
 			}
 			catch(InputMismatchException e) {
-				System.out.println("Error al introducir la accion");
+				System.out.println("Error al introducir la accion\n");
 			}
 			catch(NumberFormatException ex) {
-				System.out.println("Error al introducir la accion");
+				System.out.println("Error al introducir la accion\n");
 			}
 		}
 		return opcion;
 	}
-	public static int Salida() {
-		Scanner sc =new Scanner(System.in);
-		System.out.println("\nSi desea salir de la aplicacion pulse 1 si no pulse cualquier tecla");
-		try {
-			int opcion=sc.nextInt();
-			return opcion;
-		}
-		catch(InputMismatchException e) {
-			System.out.println("Error al introducir la accion");
-			return 0;
-		}
-		catch(NumberFormatException ex) {
-			System.out.println("Error al introducir la accion");
-			return 0;
-		}
-	}
+
+	
 }

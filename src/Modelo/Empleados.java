@@ -18,8 +18,8 @@ public class Empleados {
 
 	@Override
 	public String toString() {
-		return "Empleados [emp_no=" + emp_no + ", apellido=" + apellido + ", oficio=" + oficio + ", fecha_atl="
-				+ fecha_atl + ", salario=" + salario + ", comision=" + comision + ", dept_no=" + dept_no + "]";
+		return "emp_no=" + emp_no + ", apellido=" + apellido + ", oficio=" + oficio + ", fecha_atl="
+				+ fecha_atl + ", salario=" + salario + ", comision=" + comision + ", dept_no=" + dept_no;
 	}
 
 	public Empleados(int emp_no, String apellido, String oficio, String date, double salario, double comision,
