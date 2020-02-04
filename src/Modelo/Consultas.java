@@ -15,6 +15,7 @@ public class Consultas {
 		return objects;
 	}
 
+	//Recogemos todos los empleados de nuestra base de datos
 	public Objects<Empleados> LeerEmpleados() {
 		ODB odb = ODBFactory.open("bd.test");// Abrir BD
 		Objects<Empleados> objects = odb.getObjects(Empleados.class);
@@ -22,17 +23,7 @@ public class Consultas {
 		return objects;
 	}
 
-	public Departamentos LeerEmpleadosDeUnDepartamentoByDeptNo(int id) {
-		ODB odb = ODBFactory.open("bd.test");// Abrir BD
-		IQuery query = new CriteriaQuery(Departamentos.class, Where.equal("dept_no", id));
-		Objects<Departamentos> o = odb.getObjects(query);
-		if (!o.isEmpty()) {
-			odb.close();
-			return o.getFirst();
-		}
-		odb.close();
-		return null;
-	}
+
 
 	public boolean existEmpleadoId(int id) {
 		ODB odb = ODBFactory.open("bd.test");
@@ -47,6 +38,7 @@ public class Consultas {
 		return false;
 	}
 
+	//nos devuelve un departamento dependiendo del Id introducido
 	public Departamentos GetDepartamentoById(int id) {
 		ODB odb = ODBFactory.open("bd.test");
 		IQuery query = new CriteriaQuery(Departamentos.class, Where.equal("dept_no", id));
@@ -60,6 +52,7 @@ public class Consultas {
 		return null;
 	}
 
+	//si existe el departamento con la Id indicada nos devuelve true 
 	public boolean existDeparmento(int id) {
 		ODB odb = ODBFactory.open("bd.test");
 		IQuery query = new CriteriaQuery(Departamentos.class, Where.equal("dept_no", id));

@@ -9,6 +9,7 @@ import Modelo.Empleados;
 
 public class Consola {
 	private Scanner sc;
+	//imprimos por los datos requeridos
 	public void ImprimirDepartamentos(Objects<Departamentos> objects) {
 		while(objects.hasNext()){
 		  	 Departamentos e = objects.next();

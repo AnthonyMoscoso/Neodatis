@@ -13,11 +13,11 @@ import Vista.Consola;
 import Vista.Menu;
 
 public class Controlador {
-	public static String[] MenuInicio = { "Visualizar todos los Empleados", "Visualizar todos los Departamentos",
+	public  String[] MenuInicio = { "Visualizar todos los Empleados", "Visualizar todos los Departamentos",
 			"Insertar un Departamento", "Insertar un Empleado", "Visualizar todos los Empleados  de un Departamento",
 			"Visualizar todos los Departamentos con sus empleados", "Salir" };
 
-	public static String titulo = "Indique la accion a realizar";
+	public String titulo = "Indique la accion a realizar";
 	public Menu menu;
 	public Consola consola;
 	public Consultas consulta = new Consultas();
@@ -25,28 +25,30 @@ public class Controlador {
 	public Controlador(Menu menu, Consola consola) {
 		this.menu = menu;
 		this.consola = consola;
-		
+
 	}
-	public void eleccion(int valor) {
+
+	public void menuPrincipal() {
+		int valor=menu.GetChosseInt(titulo, MenuInicio);
 		switch (valor) {
 		case 1:
 			LeerTodosLosEmpleados();
 			break;
 		case 2:
-			LeerTodosLosDepartamentos();	
+			LeerTodosLosDepartamentos();
 			break;
 		case 3:
-			crearDepartamento();		
+			crearDepartamento();
 			break;
 		case 4:
-			crearEmpleado();		
+			crearEmpleado();
 			break;
 		case 5:
-			VerEmpleadosDeUnDepartamento();		
+			VerEmpleadosDeUnDepartamento();
 			break;
 		case 6:
 			LeerDepartamentosConEmpleados();
-			
+
 			break;
 		case 7:
 			System.exit(0);
@@ -56,8 +58,7 @@ public class Controlador {
 	}
 
 	public void Iniciar() {
-		int valor = menu.GetChosseInt(titulo, MenuInicio);
-		eleccion(valor);
+		menuPrincipal();
 	}
 
 	public void LeerTodosLosEmpleados() {
@@ -71,7 +72,7 @@ public class Controlador {
 		if (value == 1) {
 			System.exit(0);
 		} else {
-			eleccion(menu.GetChosseInt(titulo, MenuInicio));
+			menuPrincipal();
 		}
 	}
 
@@ -97,27 +98,31 @@ public class Controlador {
 	}
 
 	public void VerEmpleadosDeUnDepartamento() {
-
-		try {
-			int id = Integer
-					.parseInt(consola.ObtenerValorScanner("Introduzca el numero de departamento de los empleados"));
-			Departamentos d = consulta.LeerEmpleadosDeUnDepartamentoByDeptNo(id);
-			if (d != null) {
-				if (!d.getListEmpleados().isEmpty()) {
-					consola.ImprimirEmpleadosDeUnDepartamento(d);
+		boolean isValid=false;
+		while(!isValid) {
+			try {
+				int id = Integer
+						.parseInt(consola.ObtenerValorScanner("Introduzca el numero de departamento de los empleados"));
+				Departamentos d = consulta.GetDepartamentoById(id);
+				if (d != null) {
+					if (!d.getListEmpleados().isEmpty()) {
+						consola.ImprimirEmpleadosDeUnDepartamento(d);
+					} else {
+						consola.ImprimirMensage("este departamento no tiene ningun empleado");
+					}
+					isValid=true;
 				} else {
-					consola.ImprimirMensage("este departamento no tiene ningun empleado");
+					consola.ImprimirMensage("No existe ningun departamento con ese codigo");
+					isValid=true;
 				}
-			} else {
-				consola.ImprimirMensage("No existe ningun departamento con ese codigo");
+
+			} catch (NumberFormatException ex) {
+				consola.ImprimirMensage("Formato equivocado introduzca solo numero");
+				wantContinue();
 			}
-
-		} catch (NumberFormatException ex) {
-			consola.ImprimirMensage("Formato equivocado introduzca solo numero");
 		}
-
+	
 	}
-
 	public void LeerDepartamentosConEmpleados() {
 		Objects<Departamentos> objects = consulta.LeerDepartamentos();
 		consola.ImprimirDepartamentoConEmpleados(objects);
@@ -126,19 +131,17 @@ public class Controlador {
 	public void crearDepartamento() {
 
 		boolean isCodigValid = false;
-		int codigo=0;
+		int codigo = 0;
 		while (!isCodigValid) {
 			try {
 				codigo = Integer.parseInt(consola.ObtenerValorScanner("Inserte el numero del departamento"));
-				if(consulta.existDeparmento(codigo)) {
+				if (consulta.existDeparmento(codigo)) {
 					consola.ImprimirMensage("Ya existe un departamento con este codigo");
 					consola.ImprimirDepartamentos(consulta.LeerDepartamentos());
 					wantContinue();
-				}
-				else {
+				} else {
 					isCodigValid = true;
 				}
-				
 
 			} catch (InputMismatchException e) {
 				consola.ImprimirMensage("Error al introducir el codigo solo acepta datos numericos");
@@ -168,13 +171,13 @@ public class Controlador {
 		while (!isCodigValid) {
 			try {
 				codigo = Integer.parseInt(consola.ObtenerValorScanner("Inserte el codigo de empleado"));
-				if(consulta.existEmpleadoId(codigo)) {
+				if (consulta.existEmpleadoId(codigo)) {
 					isCodigValid = true;
-				}else {
+				} else {
 					consola.ImprimirMensage("Error ya existe este Codigo de empleados");
 					wantContinue();
 				}
-				
+
 			} catch (NumberFormatException ex) {
 				consola.ImprimirMensage("Error al introducir el dato solo acepta datos numericos");
 				wantContinue();
@@ -208,8 +211,8 @@ public class Controlador {
 		while (!isCodigValid) {
 			try {
 				departamento = Integer.parseInt(consola.ObtenerValorScanner("Inserte el codigo de departamento"));
-				if (consulta.GetDepartamentoById(departamento)!=null) {
-					
+				if (consulta.GetDepartamentoById(departamento) != null) {
+
 					isCodigValid = true;
 				} else {
 					consola.ImprimirMensage(
